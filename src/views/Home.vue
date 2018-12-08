@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <v-container>
-      <h1 class="mb-3">Home</h1>
-      <div class="pl-3 pr-3">
-        <h3 class="rule mt-3">
-          Authenticated content from:
-          <a
-            href="https://strapidev.icjia-api.cloud/posts"
-          >https://strapidev.icjia-api.cloud/posts</a>
-        </h3>
-        {{posts}}
-      </div>
-    </v-container>
-  </div>
+  <v-container>
+    <h1 class="mb-3">Home</h1>
+    <div class="pl-3 pr-3">
+      <h3 class="rule mt-3">
+        Authenticated content from:
+        <a
+          href="https://strapidev.icjia-api.cloud/posts"
+        >https://strapidev.icjia-api.cloud/posts</a>
+      </h3>
+      {{posts}}
+    </div>
+  </v-container>
 </template>
 
 <script>
