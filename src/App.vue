@@ -1,31 +1,52 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>STRAPI</span>&nbsp;
+        <span class="font-weight-light">Auth Test</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <span v-if="isLoggedIn">
+        <router-link to="/">Home</router-link>&nbsp;|&nbsp;
+        <router-link to="/about">About</router-link>
+
+        <v-btn flat @click="logout">
+          <span class="mr-2">LOGOUT</span>
+          <v-icon>exit_to_app</v-icon>
+        </v-btn>
+      </span>
+    </v-toolbar>
+
+    <v-content>
+      <router-view/>
+    </v-content>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<script>
+export default {
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
+  created() {
+    this.$http.interceptors.response.use(undefined, function(err) {
+      return new Promise(function(resolve, reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch(logout);
+        }
+        throw err;
+      });
+    });
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    }
+  }
+};
+</script>
