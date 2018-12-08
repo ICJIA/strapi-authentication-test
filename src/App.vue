@@ -2,8 +2,10 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>STRAPI</span>&nbsp;
-        <span class="font-weight-light">Auth Test</span>
+        <router-link to="/">
+          <span>STRAPI</span>&nbsp;
+          <span class="font-weight-light">Auth Test</span>
+        </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
@@ -56,3 +58,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+a {
+  color: #555 !important;
+  text-decoration: none;
+}
+</style>

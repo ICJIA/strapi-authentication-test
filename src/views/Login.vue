@@ -5,7 +5,7 @@
         <transition name="fade">
           <v-card class="pt-1 pb-5 pl-3 pr-3" v-if="!this.$store.getters.isLoggedIn">
             <v-card-title primary-title>
-              <h2>Login</h2>
+              <h2>ICJIA Calendar Login</h2>
             </v-card-title>
             <v-form>
               <v-text-field
@@ -24,7 +24,10 @@
               <v-card-actions>
                 <v-btn primary large block @click="login">Login</v-btn>
               </v-card-actions>
-              <div class="mt-3" style="color: red">{{this.$store.state.status}}</div>
+              <div class="mt-4 mb-3">
+                <router-link to="/forgot">I forgot my password</router-link>
+              </div>
+              <div style="height: 50px; color: red; font-weight: bold">{{this.$store.state.status}}</div>
             </v-form>
           </v-card>
         </transition>
@@ -45,7 +48,9 @@
 
 <script>
 export default {
-  created() {},
+  created() {
+    this.$store.commit("clear_status");
+  },
   data() {
     return {
       identifier: "",
@@ -75,11 +80,7 @@ export default {
 .login-form {
   max-width: 500px;
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+a {
+  color: #222;
 }
 </style>

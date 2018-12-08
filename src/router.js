@@ -32,10 +32,10 @@ const router = new Router({
         import(/* webpackChunkName: "login" */ "./views/Login.vue")
     },
     {
-      path: "/resend",
-      name: "resend",
+      path: "/forgot",
+      name: "forgot",
       component: () =>
-        import(/* webpackChunkName: "login" */ "./views/Resend.vue")
+        import(/* webpackChunkName: "login" */ "./views/Forgot.vue")
     },
     {
       path: "/404",

@@ -19,8 +19,14 @@ export default new Vuex.Store({
       state.jwt = jwt;
       state.user = user;
     },
+    auth_reset(state) {
+      state.status = `Please check your email for your reset link`;
+    },
     auth_error(state, err) {
       state.status = `${err}`;
+    },
+    clear_status(state) {
+      state.status = ``;
     },
     logout(state) {
       state.status = "";
@@ -35,6 +41,40 @@ export default new Vuex.Store({
         localStorage.removeItem("jwt");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
+      });
+    },
+    forgot({ commit }, email) {
+      return new Promise((resolve, reject) => {
+        // commit("auth_request");
+        console.log("email: ", email);
+        commit(" clear_status");
+        let data = {};
+        data.email = email;
+        data.url =
+          "https://strapidev.icjia-api.cloud/admin/plugins/users-permissions/auth/reset-password";
+        axios({
+          url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
+          data: data,
+          method: "POST"
+        })
+          .then(resp => {
+            commit("auth_reset");
+            resolve(resp);
+          })
+          .catch(err => {
+            let statusCode = JSON.stringify(err.response.data.statusCode);
+            console.log(statusCode);
+            console.log(err);
+            let message = "";
+            if (statusCode == 400) {
+              message = "Your email was incorrect.";
+            } else {
+              message = `Network error. Status code: ${statusCode}`;
+            }
+            commit("auth_error", message);
+            localStorage.removeItem("jwt");
+            reject(err);
+          });
       });
     },
     login({ commit }, user) {
