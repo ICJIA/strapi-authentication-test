@@ -12,8 +12,14 @@
         <router-link to="/about">About</router-link>
 
         <v-btn flat @click="logout">
-          <span class="mr-2">LOGOUT</span>
-          <v-icon>exit_to_app</v-icon>
+          <span class="mr-2">SIGN OUT</span>
+          <v-icon>lock_open</v-icon>
+        </v-btn>
+      </span>
+      <span v-else>
+        <v-btn flat @click="logout">
+          <span class="mr-2">SIGN IN</span>
+          <v-icon>lock</v-icon>
         </v-btn>
       </span>
     </v-toolbar>
