@@ -13,6 +13,7 @@
                 name="identifier"
                 label="username"
                 v-model="identifier"
+                autocomplete="identifier"
               ></v-text-field>
               <v-text-field
                 prepend-icon="lock"
@@ -20,6 +21,7 @@
                 label="password"
                 type="password"
                 v-model="password"
+                autocomplete="password"
               ></v-text-field>
               <v-card-actions>
                 <v-btn primary large block @click="login">Login</v-btn>
@@ -61,7 +63,6 @@ export default {
     login() {
       let identifier = this.identifier;
       let password = this.password;
-      console.log(identifier, password);
       this.$store
         .dispatch("login", { identifier, password })
         .then(() => this.$router.push("/"))

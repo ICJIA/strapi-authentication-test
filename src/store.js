@@ -8,17 +8,15 @@ export default new Vuex.Store({
   state: {
     status: "",
     jwt: localStorage.getItem("jwt") || "",
-    user: {},
-    userMeta: {}
+    user: {}
   },
   mutations: {
     auth_request(state) {
       // state.status = "Loading";
     },
-    auth_success(state, { jwt, userMeta }) {
+    auth_success(state, { jwt }) {
       state.status = "success";
       state.jwt = jwt;
-      state.userMeta = userMeta;
     },
     auth_reset(state) {
       state.status = `Success! Please check your email for your reset link`;
@@ -85,7 +83,7 @@ export default new Vuex.Store({
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
-        console.log(user);
+
         axios({
           url: "https://strapidev.icjia-api.cloud/auth/local",
           data: user,
@@ -94,16 +92,15 @@ export default new Vuex.Store({
           .then(resp => {
             console.log(resp);
             const jwt = resp.data.jwt;
-            const userMeta = resp.data.user;
             localStorage.setItem("jwt", jwt);
 
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-            commit("auth_success", { jwt, userMeta });
+            commit("auth_success", { jwt });
             resolve(resp);
           })
           .catch(err => {
             let statusCode = JSON.stringify(err.response.data.statusCode);
-            console.log(statusCode);
+
             let message = "";
             if (statusCode == 400) {
               message = "Your Username or Password was incorrect";
@@ -120,6 +117,6 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.jwt,
     authStatus: state => state.status,
-    userMeta: state => state.userMeta
+    user: state => state.user
   }
 });

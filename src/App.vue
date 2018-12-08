@@ -14,10 +14,7 @@
         <router-link to="/about">About</router-link>
 
         <v-btn flat @click="logout">
-          <span class="mr-2">
-            SIGN OUT
-            <span style="color: #888">{{this.$store.state.userMeta.email}}</span>
-          </span>
+          <span class="mr-2">SIGN OUT</span>
           <v-icon>lock_open</v-icon>
         </v-btn>
       </span>
@@ -43,6 +40,7 @@ export default {
     }
   },
   created() {
+    const userMeta = localStorage.getItem("userMeta");
     this.$http.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
