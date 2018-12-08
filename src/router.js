@@ -36,6 +36,15 @@ const router = new Router({
       name: "resend",
       component: () =>
         import(/* webpackChunkName: "login" */ "./views/Resend.vue")
+    },
+    {
+      path: "/404",
+      name: "error",
+      component: () => import(/* webpackChunkName: "login" */ "./views/404.vue")
+    },
+    {
+      path: "*",
+      redirect: { name: "error" }
     }
   ]
 });
