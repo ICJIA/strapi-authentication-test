@@ -20,7 +20,7 @@ export default new Vuex.Store({
       state.user = user;
     },
     auth_reset(state) {
-      state.status = `Please check your email for your reset link`;
+      state.status = `Success! Please check your email for your reset link`;
     },
     auth_error(state, err) {
       state.status = `${err}`;
@@ -44,10 +44,11 @@ export default new Vuex.Store({
       });
     },
     forgot({ commit }, email) {
+      commit("clear_status");
       return new Promise((resolve, reject) => {
         // commit("auth_request");
         console.log("email: ", email);
-        commit(" clear_status");
+
         let data = {};
         data.email = email;
         data.url =

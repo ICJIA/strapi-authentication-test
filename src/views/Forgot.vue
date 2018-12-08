@@ -18,9 +18,8 @@
                 style="height: 50px; color: red; font-weight: bold"
                 class="mt-3"
               >{{this.$store.state.status}}</div>
-              <!-- <div>
-                <router-link to="/login">Sign in</router-link>
-              </div>-->
+
+              <router-link to="/login">Sign in</router-link>
             </v-form>
           </v-card>
         </transition>
@@ -31,6 +30,9 @@
 
 <script>
 export default {
+  created() {
+    this.$store.commit("clear_status");
+  },
   data() {
     return {
       email: ""
@@ -38,12 +40,8 @@ export default {
   },
   methods: {
     reset() {
-      this.$store.commit(" clear_status");
       let email = this.email;
-      this.$store
-        .dispatch("forgot", email)
-        .then()
-        .catch(err => console.log(err));
+      this.$store.dispatch("forgot", email);
     }
   }
 };
