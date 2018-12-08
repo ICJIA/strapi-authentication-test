@@ -11,6 +11,7 @@ import axios from "axios";
 
 Vue.prototype.$http = axios;
 const jwt = localStorage.getItem("jwt");
+
 if (jwt) {
   Vue.prototype.$http.defaults.headers.common[
     "Authorization"

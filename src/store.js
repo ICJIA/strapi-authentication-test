@@ -8,16 +8,17 @@ export default new Vuex.Store({
   state: {
     status: "",
     jwt: localStorage.getItem("jwt") || "",
-    user: {}
+    user: {},
+    userMeta: {}
   },
   mutations: {
     auth_request(state) {
       // state.status = "Loading";
     },
-    auth_success(state, { jwt, user }) {
+    auth_success(state, { jwt, userMeta }) {
       state.status = "success";
       state.jwt = jwt;
-      state.user = user;
+      state.userMeta = userMeta;
     },
     auth_reset(state) {
       state.status = `Success! Please check your email for your reset link`;
@@ -39,6 +40,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("logout");
         localStorage.removeItem("jwt");
+
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });
@@ -51,8 +53,10 @@ export default new Vuex.Store({
 
         let data = {};
         data.email = email;
+
         data.url =
           "https://strapidev.icjia-api.cloud/admin/plugins/users-permissions/auth/reset-password";
+        console.log(data);
         axios({
           url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
           data: data,
@@ -90,11 +94,11 @@ export default new Vuex.Store({
           .then(resp => {
             console.log(resp);
             const jwt = resp.data.jwt;
-            const user = resp.data.user;
+            const userMeta = resp.data.user;
             localStorage.setItem("jwt", jwt);
 
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-            commit("auth_success", { jwt, user });
+            commit("auth_success", { jwt, userMeta });
             resolve(resp);
           })
           .catch(err => {
@@ -115,6 +119,7 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: state => !!state.jwt,
-    authStatus: state => state.status
+    authStatus: state => state.status,
+    userMeta: state => state.userMeta
   }
 });

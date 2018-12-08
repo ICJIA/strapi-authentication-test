@@ -2,13 +2,17 @@
   <div>
     <v-container>
       <h1 class="mb-3">Home</h1>
-      <h4>
-        Authenticated content from:
-        <a
-          href="https://strapidev.icjia-api.cloud/posts"
-        >https://strapidev.icjia-api.cloud/posts</a>
-      </h4>
-      {{posts}}
+      <div class="pl-3 pr-3">
+        <h3 class="rule mt-3">userMeta:</h3>
+        {{this.$store.getters.userMeta}}
+        <h3 class="rule mt-3">
+          Authenticated content from:
+          <a
+            href="https://strapidev.icjia-api.cloud/posts"
+          >https://strapidev.icjia-api.cloud/posts</a>
+        </h3>
+        {{posts}}
+      </div>
     </v-container>
   </div>
 </template>
@@ -35,3 +39,11 @@ export default {
   mounted() {}
 };
 </script>
+
+<style scoped>
+h3.rule {
+  border-bottom: 1px solid #ccc !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 15px;
+}
+</style>
