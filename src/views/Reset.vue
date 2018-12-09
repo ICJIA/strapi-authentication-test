@@ -14,6 +14,7 @@
               v-model="password"
               type="password"
               autocomplete="password"
+              ref="password"
             ></v-text-field>
             <v-text-field
               prepend-icon="lock"
@@ -53,6 +54,9 @@ export default {
       this.hasCode = true;
       this.code = this.$route.query.code;
     }
+  },
+  mounted() {
+    this.$nextTick(this.$refs.password.focus);
   },
   data() {
     return {

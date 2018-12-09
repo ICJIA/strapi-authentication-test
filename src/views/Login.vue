@@ -14,6 +14,7 @@
                 label="username"
                 v-model="identifier"
                 autocomplete="identifier"
+                ref="identifier"
               ></v-text-field>
               <v-text-field
                 prepend-icon="lock"
@@ -55,6 +56,9 @@
 export default {
   created() {
     this.$store.commit("clear_status");
+  },
+  mounted() {
+    this.$nextTick(this.$refs.identifier.focus);
   },
   data() {
     return {

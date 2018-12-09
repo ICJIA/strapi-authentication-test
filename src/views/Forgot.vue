@@ -8,7 +8,13 @@
               <h2>Reset my Password</h2>
             </v-card-title>
             <v-form>
-              <v-text-field prepend-icon="person" name="email" label="email" v-model="email"></v-text-field>
+              <v-text-field
+                prepend-icon="person"
+                name="email"
+                label="email"
+                v-model="email"
+                ref="email"
+              ></v-text-field>
 
               <v-card-actions>
                 <v-btn primary large block @click="reset">Send Reset Link</v-btn>
@@ -31,6 +37,9 @@
 export default {
   created() {
     this.$store.commit("clear_status");
+  },
+  mounted() {
+    this.$nextTick(this.$refs.email.focus);
   },
   data() {
     return {
