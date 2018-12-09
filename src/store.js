@@ -20,9 +20,10 @@ export default new Vuex.Store({
       state.jwt = jwt;
       state.userMeta = userMeta;
     },
-    auth_reset(state) {
-      state.status = `Success! Please check your email for your reset link`;
+    auth_reset(state, message) {
+      state.status = message;
     },
+
     auth_error(state, err) {
       state.status = `${err}`;
     },
@@ -45,6 +46,35 @@ export default new Vuex.Store({
         resolve();
       });
     },
+    reset({ commit }, payload) {
+      commit("clear_status");
+      return new Promise((resolve, reject) => {
+        commit("clear_status");
+        axios({
+          url: "https://strapidev.icjia-api.cloud/auth/reset-password",
+          data: payload,
+          method: "POST"
+        })
+          .then(resp => {
+            commit("auth_reset", "Success! You've reset your password.");
+            commit("logout");
+            localStorage.removeItem("jwt");
+            localStorage.removeItem("userMeta");
+            delete axios.defaults.headers.common["Authorization"];
+            resolve(resp);
+          })
+          .catch(err => {
+            let statusCode = JSON.stringify(err.response.data.statusCode);
+            console.log(statusCode);
+            console.log(err);
+            let message = "There was an error. Your password was not reset.";
+
+            commit("auth_error", message);
+
+            reject(err);
+          });
+      });
+    },
     forgot({ commit }, email) {
       commit("clear_status");
       return new Promise((resolve, reject) => {
@@ -54,8 +84,7 @@ export default new Vuex.Store({
         let data = {};
         data.email = email;
 
-        data.url =
-          "https://strapidev.icjia-api.cloud/admin/plugins/users-permissions/auth/reset-password";
+        data.url = "https://strapi-auth.netlify.com/reset";
         console.log(data);
         axios({
           url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
@@ -63,7 +92,10 @@ export default new Vuex.Store({
           method: "POST"
         })
           .then(resp => {
-            commit("auth_reset");
+            commit(
+              "auth_reset",
+              "Success! Please check your email for your reset link"
+            );
             resolve(resp);
           })
           .catch(err => {

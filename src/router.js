@@ -38,6 +38,12 @@ const router = new Router({
         import(/* webpackChunkName: "login" */ "./views/Forgot.vue")
     },
     {
+      path: "/reset",
+      name: "reset",
+      component: () =>
+        import(/* webpackChunkName: "reset" */ "./views/Reset.vue")
+    },
+    {
       path: "/404",
       name: "error",
       component: () => import(/* webpackChunkName: "login" */ "./views/404.vue")
