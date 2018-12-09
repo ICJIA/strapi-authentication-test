@@ -8,10 +8,10 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>isLoggedIn:
-      <span style="font-weight: 900; color: darkblue">
+      <span style="font-weight: 900; color: red">
         &nbsp;{{$store.getters.isLoggedIn}}
-        <span v-if="isLoggedIn">|&nbsp;</span>
-      </span>
+        <span v-if="isLoggedIn">&nbsp;|&nbsp;</span>
+      </span>&nbsp;
       <span v-if="isLoggedIn">
         <router-link to="/">Home</router-link>&nbsp;|&nbsp;
         <router-link to="/about">About</router-link>
@@ -21,7 +21,8 @@
           <v-icon>lock_open</v-icon>
         </v-btn>
       </span>
-      <span v-else>
+      
+      <span v-if="!isLoggedIn">
         <v-btn flat @click="logout">
           <span class="mr-2">SIGN IN</span>
           <v-icon>lock</v-icon>
