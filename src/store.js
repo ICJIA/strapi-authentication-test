@@ -8,15 +8,17 @@ export default new Vuex.Store({
   state: {
     status: "",
     jwt: localStorage.getItem("jwt") || "",
+    userMeta: JSON.parse(localStorage.getItem("userMeta")) || "",
     user: {}
   },
   mutations: {
     auth_request(state) {
       // state.status = "Loading";
     },
-    auth_success(state, { jwt }) {
+    auth_success(state, { jwt, userMeta }) {
       state.status = "success";
       state.jwt = jwt;
+      state.userMeta = userMeta;
     },
     auth_reset(state) {
       state.status = `Success! Please check your email for your reset link`;
@@ -38,7 +40,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("logout");
         localStorage.removeItem("jwt");
-
+        localStorage.removeItem("userMeta");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });
@@ -92,10 +94,11 @@ export default new Vuex.Store({
           .then(resp => {
             console.log(resp);
             const jwt = resp.data.jwt;
+            const userMeta = resp.data.user;
             localStorage.setItem("jwt", jwt);
-
+            localStorage.setItem("userMeta", JSON.stringify(userMeta));
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-            commit("auth_success", { jwt });
+            commit("auth_success", { jwt, userMeta });
             resolve(resp);
           })
           .catch(err => {
@@ -117,6 +120,6 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.jwt,
     authStatus: state => state.status,
-    user: state => state.user
+    userMeta: state => state.userMeta
   }
 });

@@ -14,7 +14,7 @@
         <router-link to="/about">About</router-link>
 
         <v-btn flat @click="logout">
-          <span class="mr-2">SIGN OUT</span>
+          <span class="mr-2">SIGN OUT {{this.$store.state.userMeta.username}}</span>
           <v-icon>lock_open</v-icon>
         </v-btn>
       </span>

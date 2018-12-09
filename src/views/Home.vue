@@ -2,6 +2,8 @@
   <v-container>
     <h1 class="mb-3">Home</h1>
     <div class="pl-3 pr-3">
+      <h3 class="rule mt-3">userMeta:</h3>
+      {{this.$store.state.userMeta}}
       <h3 class="rule mt-3">
         Authenticated content from:
         <a
@@ -23,13 +25,16 @@ export default {
     };
   },
   async created() {
-    this.$http
+    await this.$http
       .get("https://strapidev.icjia-api.cloud/posts")
       .then(response => {
         this.posts = response.data;
       })
       .catch(error => {
         console.log("An error occurred:", error);
+        this.$store.dispatch("logout").then(() => {
+          this.$router.push("/login");
+        });
       });
   },
   mounted() {}
