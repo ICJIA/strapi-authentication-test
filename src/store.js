@@ -117,7 +117,6 @@ export default new Vuex.Store({
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
-
         axios({
           url: `${config.api.baseApi}${config.api.login}`,
           data: user,
@@ -133,6 +132,7 @@ export default new Vuex.Store({
             resolve(resp);
           })
           .catch(err => {
+            console.log("error");
             let message = JSON.parse(JSON.stringify(err.response.data.message));
             commit("auth_error", message);
             localStorage.removeItem("jwt");
