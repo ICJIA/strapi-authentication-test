@@ -55,7 +55,10 @@ export default new Vuex.Store({
           method: "POST"
         })
           .then(resp => {
-            commit("auth_reset", "Success! You've reset your password.");
+            commit(
+              "auth_reset",
+              `<div style="color: green">Success! You've reset your password.</div>`
+            );
             commit("logout");
             localStorage.removeItem("jwt");
             localStorage.removeItem("userMeta");
@@ -78,7 +81,7 @@ export default new Vuex.Store({
     forgot({ commit }, email) {
       commit("clear_status");
       return new Promise((resolve, reject) => {
-        // commit("auth_request");
+        commit("auth_request");
 
         let data = {};
         data.email = email;
@@ -93,7 +96,7 @@ export default new Vuex.Store({
           .then(resp => {
             commit(
               "auth_reset",
-              `<h3>Success!</h3><div>Please check your email for your reset link.</div>`
+              `<div style="color: green"><h3>Success!</h3><div>Please check your email for your reset link.</div></div>`
             );
 
             resolve(resp);

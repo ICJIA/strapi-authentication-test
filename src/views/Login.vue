@@ -4,7 +4,7 @@
       <v-flex xs4 class="grey lighten-4 animated fadeIn fast">
         <v-card class="pt-1 pb-5 pl-3 pr-3" v-if="!this.$store.getters.isLoggedIn">
           <v-card-title primary-title>
-            <h2>ICJIA Calendar Login</h2>
+            <h2 style="text-transform: uppercase;">Auth Test login</h2>
           </v-card-title>
           <v-form>
             <v-text-field
