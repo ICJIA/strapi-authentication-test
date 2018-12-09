@@ -35,7 +35,7 @@ const router = new Router({
       path: "/forgot",
       name: "forgot",
       component: () =>
-        import(/* webpackChunkName: "login" */ "./views/Forgot.vue")
+        import(/* webpackChunkName: "forgot" */ "./views/Forgot.vue")
     },
     {
       path: "/reset",
@@ -46,7 +46,7 @@ const router = new Router({
     {
       path: "/404",
       name: "error",
-      component: () => import(/* webpackChunkName: "login" */ "./views/404.vue")
+      component: () => import(/* webpackChunkName: "error" */ "./views/404.vue")
     },
     {
       path: "*",
