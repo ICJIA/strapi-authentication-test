@@ -101,6 +101,7 @@ export default new Vuex.Store({
               "auth_reset",
               `<h3>Success!</h3><div>Please check your email for your reset link.</div>`
             );
+
             resolve(resp);
           })
           .catch(err => {
