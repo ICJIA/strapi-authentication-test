@@ -35,7 +35,6 @@ export default {
         this.posts = response.data;
       })
       .catch(error => {
-        console.log("An error occurred:", error);
         this.$store.dispatch("logout").then(() => {
           this.$router.push("/login");
         });

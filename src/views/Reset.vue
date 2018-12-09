@@ -82,7 +82,6 @@ export default {
         this.matchStatus = "Passwords must match";
       } else {
         this.matchStatus = "";
-        console.log(payload);
         this.$store
           .dispatch("reset", payload)
           .then(() => this.$router.push("/"))

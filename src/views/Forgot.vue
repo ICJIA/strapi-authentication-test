@@ -49,7 +49,6 @@ export default {
   methods: {
     reset() {
       let email = this.email.toString();
-      console.log("Email: ", email);
       this.$store.dispatch("forgot", email);
     }
   }

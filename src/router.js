@@ -69,11 +69,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// router.afterEach((to, from, next) => {
-//   let jwt = localStorage.getItem("jwt");
-//   if (!jwt) {
-//     store.dispatch("logout").then(router.push("/login"));
-//   }
-// });
-
 export default router;

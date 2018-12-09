@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 Vue.use(Vuex);
-Vue.prototype.$http = axios;
 
 export default new Vuex.Store({
   state: {
@@ -13,7 +12,7 @@ export default new Vuex.Store({
   },
   mutations: {
     auth_request(state) {
-      // state.status = "Loading";
+      state.status = "Loading...";
     },
     auth_success(state, { jwt, userMeta }) {
       state.status = "success";
@@ -42,7 +41,7 @@ export default new Vuex.Store({
         commit("logout");
         localStorage.removeItem("jwt");
         localStorage.removeItem("userMeta");
-        delete Vue.prototype.$http.defaults.headers.common["Authorization"];
+        delete axios.defaults.headers.common["Authorization"];
         resolve();
       });
     },
@@ -50,24 +49,21 @@ export default new Vuex.Store({
       commit("clear_status");
       return new Promise((resolve, reject) => {
         commit("clear_status");
-        Vue.prototype
-          .$http({
-            url: "https://strapidev.icjia-api.cloud/auth/reset-password",
-            data: payload,
-            method: "POST"
-          })
+        axios({
+          url: "https://strapidev.icjia-api.cloud/auth/reset-password",
+          data: payload,
+          method: "POST"
+        })
           .then(resp => {
             commit("auth_reset", "Success! You've reset your password.");
             commit("logout");
             localStorage.removeItem("jwt");
             localStorage.removeItem("userMeta");
-            delete Vue.prototype.$http.defaults.headers.common["Authorization"];
+            delete axios.defaults.headers.common["Authorization"];
             resolve(resp);
           })
           .catch(err => {
             let statusCode = JSON.stringify(err.response.data.statusCode);
-            console.log(statusCode);
-            console.log(err);
             let message = JSON.parse(JSON.stringify(err.response.data.message));
 
             commit(
@@ -83,19 +79,17 @@ export default new Vuex.Store({
       commit("clear_status");
       return new Promise((resolve, reject) => {
         // commit("auth_request");
-        console.log("email: ", email);
 
         let data = {};
         data.email = email;
 
         data.url = "https://strapi-auth.netlify.com/reset";
-        console.log(data);
-        Vue.prototype
-          .$http({
-            url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
-            data: data,
-            method: "POST"
-          })
+
+        axios({
+          url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
+          data: data,
+          method: "POST"
+        })
           .then(resp => {
             commit(
               "auth_reset",
@@ -106,12 +100,11 @@ export default new Vuex.Store({
           })
           .catch(err => {
             let statusCode = JSON.stringify(err.response.data.statusCode);
-            console.log(statusCode);
-            console.log(err);
 
             let message = JSON.parse(JSON.stringify(err.response.data.message));
             commit("auth_error", `<h3>ERROR:</h3>${message}`);
             localStorage.removeItem("jwt");
+            localStorage.removeItem("userMeta");
             reject(err);
           });
       });
@@ -120,35 +113,25 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
 
-        Vue.prototype
-          .$http({
-            url: "https://strapidev.icjia-api.cloud/auth/local",
-            data: user,
-            method: "POST"
-          })
+        axios({
+          url: "https://strapidev.icjia-api.cloud/auth/local",
+          data: user,
+          method: "POST"
+        })
           .then(resp => {
-            console.log(resp);
             const jwt = resp.data.jwt;
             const userMeta = resp.data.user;
             localStorage.setItem("jwt", jwt);
             localStorage.setItem("userMeta", JSON.stringify(userMeta));
-            Vue.prototype.$http.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${jwt}`;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             commit("auth_success", { jwt, userMeta });
             resolve(resp);
           })
           .catch(err => {
-            let statusCode = JSON.stringify(err.response.data.statusCode);
-
-            let message = "";
-            if (statusCode == 400) {
-              message = "Your Username or Password was incorrect";
-            } else {
-              message = `Network error. Status code: ${statusCode}`;
-            }
+            let message = JSON.parse(JSON.stringify(err.response.data.message));
             commit("auth_error", message);
             localStorage.removeItem("jwt");
+            localStorage.removeItem("userMeta");
             reject(err);
           });
       });
