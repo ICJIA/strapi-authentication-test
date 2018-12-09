@@ -29,7 +29,10 @@
               <div class="mt-4 mb-3">
                 <router-link to="/forgot">I forgot my password</router-link>
               </div>
-              <div style="height: 50px; color: red; font-weight: bold">{{this.$store.state.status}}</div>
+              <div
+                style="height: 50px; color: red; font-weight: bold"
+                v-html="this.$store.state.status"
+              ></div>
             </v-form>
           </v-card>
         </transition>

@@ -17,9 +17,8 @@
               <div
                 style="height: 50px; color: red; font-weight: bold"
                 class="mt-3"
-              >{{this.$store.state.status}}</div>
-
-              <router-link to="/login">Sign in</router-link>
+                v-html="this.$store.state.status"
+              ></div>
             </v-form>
           </v-card>
         </transition>

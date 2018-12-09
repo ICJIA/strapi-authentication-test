@@ -67,9 +67,12 @@ export default new Vuex.Store({
             let statusCode = JSON.stringify(err.response.data.statusCode);
             console.log(statusCode);
             console.log(err);
-            let message = "There was an error. Your password was not reset.";
+            let message = JSON.parse(JSON.stringify(err.response.data.message));
 
-            commit("auth_error", message);
+            commit(
+              "auth_error",
+              `<h3>ERROR:</h3>${message}<div>Your password was not reset.</div>`
+            );
 
             reject(err);
           });
@@ -94,7 +97,7 @@ export default new Vuex.Store({
           .then(resp => {
             commit(
               "auth_reset",
-              "Success! Please check your email for your reset link"
+              `<h3>Success!</h3><div>Please check your email for your reset link.</div>`
             );
             resolve(resp);
           })
@@ -102,13 +105,9 @@ export default new Vuex.Store({
             let statusCode = JSON.stringify(err.response.data.statusCode);
             console.log(statusCode);
             console.log(err);
-            let message = "";
-            if (statusCode == 400) {
-              message = "Your email was incorrect.";
-            } else {
-              message = `Network error. Status code: ${statusCode}`;
-            }
-            commit("auth_error", message);
+
+            let message = JSON.parse(JSON.stringify(err.response.data.message));
+            commit("auth_error", `<h3>ERROR:</h3>${message}`);
             localStorage.removeItem("jwt");
             reject(err);
           });
