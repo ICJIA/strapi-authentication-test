@@ -7,8 +7,11 @@
           <span class="font-weight-light">Auth Test</span>
         </router-link>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-
+      <v-spacer></v-spacer>isLoggedIn:
+      <span style="font-weight: 900; color: darkblue">
+        &nbsp;{{$store.getters.isLoggedIn}}
+        <span v-if="isLoggedIn">|&nbsp;</span>
+      </span>
       <span v-if="isLoggedIn">
         <router-link to="/">Home</router-link>&nbsp;|&nbsp;
         <router-link to="/about">About</router-link>
@@ -65,6 +68,11 @@ export default {
 a {
   color: #555 !important;
   text-decoration: none;
+  font-weight: 900;
+}
+
+a:hover {
+  color: #999 !important;
 }
 .fade-enter-active,
 .fade-leave-active {
