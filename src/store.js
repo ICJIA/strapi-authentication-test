@@ -12,7 +12,7 @@ export default new Vuex.Store({
   },
   mutations: {
     auth_request(state) {
-      state.status = "Loading...";
+      state.status = "<img src='/loading.gif' />";
     },
     auth_success(state, { jwt, userMeta }) {
       state.status = "success";
@@ -24,7 +24,7 @@ export default new Vuex.Store({
     },
 
     auth_error(state, err) {
-      state.status = `${err}`;
+      state.status = `<div style='color: red'>${err}</div>`;
     },
     clear_status(state) {
       state.status = ``;
