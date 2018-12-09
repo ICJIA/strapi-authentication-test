@@ -3,16 +3,18 @@
     <h1 class="mb-3">Home</h1>
     <div class="pl-3 pr-3">
       <h3 class="rule mt-3">userMeta:</h3>
-      {{this.$store.state.userMeta}}
+      <tree-view :data="this.$store.state.userMeta" :options="{maxDepth: 3, link: true}"></tree-view>
+
       <h3 class="rule mt-3">axios headers</h3>
-      {{$http.defaults.headers.common}}
+      <tree-view :data="$http.defaults.headers.common" :options="{maxDepth: 3, link: true}"></tree-view>
+
       <h3 class="rule mt-3">
         Authenticated content from:
         <a
           href="https://strapidev.icjia-api.cloud/posts"
         >https://strapidev.icjia-api.cloud/posts</a>
       </h3>
-      {{posts}}
+      <tree-view :data="posts" :options="{maxDepth: 3, link: true}"></tree-view>
     </div>
   </v-container>
 </template>
