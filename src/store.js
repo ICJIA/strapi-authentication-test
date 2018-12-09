@@ -4,6 +4,8 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
+Vue.prototype.$http = axios;
+
 export default new Vuex.Store({
   state: {
     status: "",
@@ -42,7 +44,7 @@ export default new Vuex.Store({
         commit("logout");
         localStorage.removeItem("jwt");
         localStorage.removeItem("userMeta");
-        delete axios.defaults.headers.common["Authorization"];
+        delete Vue.prototype.$http.defaults.headers.common["Authorization"];
         resolve();
       });
     },
@@ -50,17 +52,18 @@ export default new Vuex.Store({
       commit("clear_status");
       return new Promise((resolve, reject) => {
         commit("clear_status");
-        axios({
-          url: "https://strapidev.icjia-api.cloud/auth/reset-password",
-          data: payload,
-          method: "POST"
-        })
+        Vue.prototype
+          .$http({
+            url: "https://strapidev.icjia-api.cloud/auth/reset-password",
+            data: payload,
+            method: "POST"
+          })
           .then(resp => {
             commit("auth_reset", "Success! You've reset your password.");
             commit("logout");
             localStorage.removeItem("jwt");
             localStorage.removeItem("userMeta");
-            delete axios.defaults.headers.common["Authorization"];
+            delete Vue.prototype.$http.defaults.headers.common["Authorization"];
             resolve(resp);
           })
           .catch(err => {
@@ -89,11 +92,12 @@ export default new Vuex.Store({
 
         data.url = "https://strapi-auth.netlify.com/reset";
         console.log(data);
-        axios({
-          url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
-          data: data,
-          method: "POST"
-        })
+        Vue.prototype
+          .$http({
+            url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
+            data: data,
+            method: "POST"
+          })
           .then(resp => {
             commit(
               "auth_reset",
@@ -117,18 +121,21 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
 
-        axios({
-          url: "https://strapidev.icjia-api.cloud/auth/local",
-          data: user,
-          method: "POST"
-        })
+        Vue.prototype
+          .$http({
+            url: "https://strapidev.icjia-api.cloud/auth/local",
+            data: user,
+            method: "POST"
+          })
           .then(resp => {
             console.log(resp);
             const jwt = resp.data.jwt;
             const userMeta = resp.data.user;
             localStorage.setItem("jwt", jwt);
             localStorage.setItem("userMeta", JSON.stringify(userMeta));
-            axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+            Vue.prototype.$http.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${jwt}`;
             commit("auth_success", { jwt, userMeta });
             resolve(resp);
           })
