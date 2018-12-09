@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-layout row class="text-xs-center" align-center justify-center>
-      <v-flex xs3 class="grey lighten-4">
+      <v-flex xs4 class="grey lighten-4">
         <transition name="fade">
           <v-card class="pt-1 pb-5 pl-3 pr-3" v-if="!this.$store.getters.isLoggedIn">
             <v-card-title primary-title>
