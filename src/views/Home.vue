@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import config from "@/config";
 export default {
   name: "home",
   components: {},
@@ -30,7 +31,7 @@ export default {
   },
   async created() {
     await this.$http
-      .get("https://strapidev.icjia-api.cloud/posts")
+      .get(`${config.api.baseApi}${config.api.postsRoute}`)
       .then(response => {
         this.posts = response.data;
       })

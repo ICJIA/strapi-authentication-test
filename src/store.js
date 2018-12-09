@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import config from "@/config";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -50,7 +51,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("clear_status");
         axios({
-          url: "https://strapidev.icjia-api.cloud/auth/reset-password",
+          url: `${config.api.baseApi}${config.api.resetPassword}`,
           data: payload,
           method: "POST"
         })
@@ -85,11 +86,12 @@ export default new Vuex.Store({
 
         let data = {};
         data.email = email;
-
-        data.url = "https://strapi-auth.netlify.com/reset";
+        data.url = `${config.api.baseClient}${
+          config.api.resetPasswordCallback
+        }`;
 
         axios({
-          url: "https://strapidev.icjia-api.cloud/auth/forgot-password",
+          url: `${config.api.baseApi}${config.api.forgetPassword}`,
           data: data,
           method: "POST"
         })
@@ -117,7 +119,7 @@ export default new Vuex.Store({
         commit("auth_request");
 
         axios({
-          url: "https://strapidev.icjia-api.cloud/auth/local",
+          url: `${config.api.baseApi}${config.api.login}`,
           data: user,
           method: "POST"
         })
