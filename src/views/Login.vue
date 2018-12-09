@@ -66,8 +66,11 @@ export default {
     login() {
       let identifier = this.identifier;
       let password = this.password;
+      let payload = {};
+      payload.identifier = identifier;
+      payload.password = password;
       this.$store
-        .dispatch("login", { identifier, password })
+        .dispatch("login", payload)
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
     },

@@ -15,10 +15,10 @@ export default new Vuex.Store({
     auth_request(state) {
       state.status = "<img src='/loading.gif' />";
     },
-    auth_success(state, { jwt, userMeta }) {
-      state.status = "success";
-      state.jwt = jwt;
-      state.userMeta = userMeta;
+    auth_success(state, payload) {
+      state.status = "<img src='/loading.gif' />";
+      state.jwt = payload.jwt;
+      state.userMeta = payload.userMeta;
     },
     auth_reset(state, message) {
       state.status = message;
@@ -114,12 +114,12 @@ export default new Vuex.Store({
           });
       });
     },
-    login({ commit }, user) {
+    login({ commit }, payload) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
           url: `${config.api.base}${config.api.login}`,
-          data: user,
+          data: payload,
           method: "POST"
         })
           .then(resp => {
