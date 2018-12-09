@@ -1,42 +1,41 @@
 <template>
   <v-container fill-height>
     <v-layout row class="text-xs-center" align-center justify-center>
-      <v-flex xs4 class="grey lighten-4">
-        <transition name="fade">
-          <v-card class="pt-1 pb-5 pl-3 pr-3" v-if="!this.$store.getters.isLoggedIn">
-            <v-card-title primary-title>
-              <h2>ICJIA Calendar Login</h2>
-            </v-card-title>
-            <v-form>
-              <v-text-field
-                prepend-icon="person"
-                name="identifier"
-                label="username"
-                v-model="identifier"
-                autocomplete="identifier"
-                ref="identifier"
-              ></v-text-field>
-              <v-text-field
-                prepend-icon="lock"
-                name="password"
-                label="password"
-                type="password"
-                v-model="password"
-                autocomplete="password"
-              ></v-text-field>
-              <v-card-actions>
-                <v-btn primary large block @click="login">Login</v-btn>
-              </v-card-actions>
-              <div class="mt-4 mb-3">
-                <router-link to="/forgot">I forgot my password</router-link>
-              </div>
-              <div
-                style="height: 50px; color: red; font-weight: bold"
-                v-html="this.$store.state.status"
-              ></div>
-            </v-form>
-          </v-card>
-        </transition>
+      <v-flex xs4 class="grey lighten-4 animated fadeIn fast">
+        <v-card class="pt-1 pb-5 pl-3 pr-3" v-if="!this.$store.getters.isLoggedIn">
+          <v-card-title primary-title>
+            <h2>ICJIA Calendar Login</h2>
+          </v-card-title>
+          <v-form>
+            <v-text-field
+              prepend-icon="person"
+              name="identifier"
+              label="username"
+              v-model="identifier"
+              autocomplete="identifier"
+              ref="identifier"
+            ></v-text-field>
+            <v-text-field
+              prepend-icon="lock"
+              name="password"
+              label="password"
+              type="password"
+              v-model="password"
+              autocomplete="password"
+            ></v-text-field>
+            <v-card-actions>
+              <v-btn primary large block @click="login">Login</v-btn>
+            </v-card-actions>
+            <div class="mt-4 mb-3">
+              <router-link to="/forgot">I forgot my password</router-link>
+            </div>
+            <div
+              style="height: 50px; color: red; font-weight: bold"
+              v-html="this.$store.state.status"
+            ></div>
+          </v-form>
+        </v-card>
+
         <v-card
           v-if="this.$store.getters.isLoggedIn"
           class="text=xs=center pt-5 pb-5"

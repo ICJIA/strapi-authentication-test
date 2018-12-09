@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-layout row class="text-xs-center" align-center justify-center>
-      <v-flex xs4>
+      <v-flex xs4 class="animated bounceInDown">
         <v-card class="pt-1 pb-5 pl-3 pr-3">
           <v-card-title primary-title>
             <h2>Reset Password</h2>
