@@ -4,7 +4,12 @@
       <v-flex xs4 class="grey lighten-4 animated zoomIn fast">
         <v-card class="pt-1 pb-5 pl-3 pr-3" v-if="!this.$store.getters.isLoggedIn">
           <v-card-title primary-title>
-            <h2 style="text-transform: uppercase;">Auth Test login</h2>
+            <h2>
+              <span class="headline text-uppercase;">STRAPI</span>&nbsp;
+              <span
+                style="font-weight: 200; text-transform: uppercase !important;"
+              >&nbsp;Auth Test login</span>
+            </h2>
           </v-card-title>
           <v-form>
             <v-text-field
