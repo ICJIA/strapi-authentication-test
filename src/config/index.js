@@ -1,6 +1,6 @@
 const config = {
   api: {
-    baseApi: "https://strapidev.icjia-api.cloud",
+    base: "https://strapidev.icjia-api.cloud",
     baseClient: "https://strapi-auth.netlify.com",
     forgetPassword: "/auth/forgot-password",
     resetPassword: "/auth/reset-password",

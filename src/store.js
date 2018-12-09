@@ -51,7 +51,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("clear_status");
         axios({
-          url: `${config.api.baseApi}${config.api.resetPassword}`,
+          url: `${config.api.base}${config.api.resetPassword}`,
           data: payload,
           method: "POST"
         })
@@ -91,7 +91,7 @@ export default new Vuex.Store({
         }`;
 
         axios({
-          url: `${config.api.baseApi}${config.api.forgetPassword}`,
+          url: `${config.api.base}${config.api.forgetPassword}`,
           data: data,
           method: "POST"
         })
@@ -118,7 +118,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-          url: `${config.api.baseApi}${config.api.login}`,
+          url: `${config.api.base}${config.api.login}`,
           data: user,
           method: "POST"
         })

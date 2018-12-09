@@ -31,7 +31,7 @@ export default {
   },
   async created() {
     await this.$http
-      .get(`${config.api.baseApi}${config.api.posts}`)
+      .get(`${config.api.base}${config.api.posts}`)
       .then(response => {
         this.posts = response.data;
       })
