@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
     "animate.css": "^3.7.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "strapi-sdk-javascript": "^0.3.1",
     "vue": "^2.5.18",
     "vue-json-tree-view": "^2.1.4",
